@@ -24,7 +24,20 @@ class CurrentPosts(LoginRequired, TemplateView):
     template_name = "posts/index.html"
 
     def get(self, req: HttpRequest):
-        return render(req, self.template_name)
+        tickets = Ticket.objects.filter(user=req.user)
+        reviews = Review.objects.filter(user=req.user)
+
+        posts = [*tickets, *reviews]
+
+        return render(req, self.template_name, {"posts": posts})
+
+    def delete(self, req: HttpRequest, post_id):
+        tickets = Ticket.objects.filter(user=req.user)
+        reviews = Review.objects.filter(user=req.user)
+
+        posts = [*tickets, *reviews]
+
+        return redirect("/posts/")
 
 
 class ReviewPosts(LoginRequired, TemplateView):
