@@ -31,13 +31,19 @@ class CurrentPosts(LoginRequired, TemplateView):
 
         return render(req, self.template_name, {"posts": posts})
 
-    def delete(self, req: HttpRequest, post_id):
-        tickets = Ticket.objects.filter(user=req.user)
-        reviews = Review.objects.filter(user=req.user)
+    def post(self, req: HttpRequest):
+        delete = req.POST.get("delete", None)
+        edit = req.POST.get("edit", None)
 
-        posts = [*tickets, *reviews]
+        model = Ticket if req.POST.get("type") == "ticket" else Review
+        ticket = model.objects.get(id=delete)
 
-        return redirect("/posts/")
+        if delete:
+            ticket.delete()
+            return redirect("/posts")
+
+        elif edit:
+            return render(req, "posts/create.html", {"ticket": ticket, "edit": True})
 
 
 class ReviewPosts(LoginRequired, TemplateView):

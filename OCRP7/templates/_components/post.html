@@ -24,7 +24,7 @@
                 <div class="font-semibold text-xl">
                     <div class="flex items-center mt-2 mb-4">
                         {% for star in "12345"|make_list %}
-                        {% if star >= rating|add:'0' %}
+                        {% if star|add:'0' <= post.rating %}
                         <svg class="w-7 h-7 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20">
                             <path

@@ -6,9 +6,9 @@ from django.db import models
 
 
 class Ticket(models.Model):
+    is_blocked = models.BooleanField(default=False)
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
-    is_blocked = models.BooleanField(default=False)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
