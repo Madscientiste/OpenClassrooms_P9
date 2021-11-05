@@ -10,7 +10,7 @@
                     <div class="font-semibold text-xl">{{ post.user.username }}</div>
                     <div class="text-sm text-dimm">{{ post.time_created|date:'d/m/Y H:i'}}</div>
                     <div class="text-sm text-dimm">
-                        {% if post.ticket %}
+                        {% if not post.ticket %}
                         Requesting a review
                         {% else %}
                         Published a review
@@ -24,20 +24,19 @@
                 <div class="font-semibold text-xl">
                     <div class="flex items-center mt-2 mb-4">
                         {% for star in "12345"|make_list %}
-                        {% if star|add:'0' <= post.rating %}
-                        <svg class="w-7 h-7 fill-current text-primary" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
+                        {% if star|add:'0' <= post.rating %} <svg class="w-7 h-7 fill-current text-primary"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path
                                 d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                        </svg>
-                        {% else %}
-                        <svg class="w-7 h-7 fill-current text-dimm" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20">
-                            <path
-                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                        </svg>
-                        {% endif %}
-                        {% endfor %}
+                            </svg>
+                            {% else %}
+                            <svg class="w-7 h-7 fill-current text-dimm" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20">
+                                <path
+                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                            </svg>
+                            {% endif %}
+                            {% endfor %}
                     </div>
                 </div>
                 {% elif post.is_blocked %}

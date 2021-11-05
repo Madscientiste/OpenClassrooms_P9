@@ -34,16 +34,19 @@ class CurrentPosts(LoginRequired, TemplateView):
     def post(self, req: HttpRequest):
         delete = req.POST.get("delete", None)
         edit = req.POST.get("edit", None)
+        is_ticket = req.POST.get("type") == "ticket"
 
-        model = Ticket if req.POST.get("type") == "ticket" else Review
-        ticket = model.objects.get(id=delete)
+        model = Ticket if is_ticket else Review
+        ticket = model.objects.get(id=delete or edit)
+
+        form = TicketForm if is_ticket else ReviewForm
+        form = form(instance=ticket)
 
         if delete:
             ticket.delete()
             return redirect("/posts")
-
         elif edit:
-            return render(req, "posts/create.html", {"ticket": ticket, "edit": True})
+            return render(req, "posts/form.html", {"form": form, "form_type": "update"})
 
 
 class ReviewPosts(LoginRequired, TemplateView):

@@ -30,10 +30,10 @@ class RegisterPage(TemplateView):
         register_form = SignUpForm(req.POST)
 
         if register_form.is_valid():
-            user = register_form.save()
-            user.refresh_from_db()
+            if not register_form.cleaned_data["avatar_url"]:
+                del register_form.cleaned_data["avatar_url"]
 
-            user.save()
+            user = register_form.save()
             raw_password = register_form.cleaned_data.get("password1")
             user = authenticate(username=user.username, password=raw_password)
             login(req, user)
