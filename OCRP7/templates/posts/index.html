@@ -1,0 +1,218 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LIT Reviews - Flux</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://kit.fontawesome.com/6a3a505936.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    {% tailwind_css %}
+
+    <style>
+        #__bs_notify__ {
+            display: none !important;
+        }
+
+        .bg-gray-1000 {
+            background-color: #171515;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-100 text-light font-body">
+    <div class="max-w-5xl ml-auto mr-auto">
+        {% include "_components/nav_bar.html" %}
+
+
+        <section class="my-4 max-w-3xl ml-auto mr-auto">
+            <section class="flex flex-col">
+                <div class="flex justify-end space-x-4">
+                    <div
+                        class="flex https://via.placeholder.com/176x276?text=NO IMAGE GIVENinput content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
+                            Delete
+                        </button>
+
+                        <div class="pl-3 text-light">
+                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path class="stroke-current" d="M9 10V44H39V10H9Z" fill="none" stroke="#ffffff"
+                                    stroke-width="3" stroke-linejoin="round" />
+                                <path class="stroke-current" d="M20 20V33" stroke="#ffffff" stroke-width="3"
+                                    stroke-linecap="butt" stroke-linejoin="round" />
+                                <path class="stroke-current" d="M28 20V33" stroke="#ffffff" stroke-width="3"
+                                    stroke-linecap="butt" stroke-linejoin="round" />
+                                <path class="stroke-current" d="M4 10H44" stroke="#ffffff" stroke-width="3"
+                                    stroke-linecap="butt" stroke-linejoin="round" />
+                                <path class="stroke-current" d="M16 10L19.289 4H28.7771L32 10H16Z" fill="none"
+                                    stroke="#ffffff" stroke-width="3" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
+                            Edit Post
+                        </button>
+
+                        <div class="pl-3 text-light">
+                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path class="stroke-current" d="M40 33V42C40 43.1046 39.1046 44 38 44H31.5"
+                                    stroke="#ffffff" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
+                                <path class="stroke-current"
+                                    d="M40 16V6C40 4.89543 39.1046 4 38 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H16"
+                                    stroke="#ffffff" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
+                                <path class="stroke-current" d="M16 16H30" stroke="#ffffff" stroke-width="3"
+                                    stroke-linecap="butt" />
+                                <path class="stroke-current" d="M23 44L40 23" stroke="#ffffff" stroke-width="3"
+                                    stroke-linecap="butt" />
+                                <path class="stroke-current" d="M16 24H24" stroke="#ffffff" stroke-width="3"
+                                    stroke-linecap="butt" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 bg-layer w-full rounded flex flex-row justify-between p-5">
+                    <div class="flex flex-col mr-6">
+                        <div class="flex justify-between pb-4 space-x-4">
+                            <div class="flex space-x-4">
+                                <div class="w-20 h-20">
+                                    <img class="rounded w-full h-full object-cover"
+                                        src="https://cdn.myanimelist.net/images/userimages/5696390.jpg?t=1634225400"
+                                        alt="ayaya">
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="font-semibold text-xl">NjustN</div>
+                                    <div class="text-sm text-dimm">24/09/2021 17:58</div>
+                                    <div class="text-sm text-dimm">Published a Review</div>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                <div class="font-semibold text-xl">
+                                    <div class="flex items-center mt-2 mb-4">
+                                        <svg class="w-7 h-7 fill-current text-primary"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                        <svg class="w-7 h-7 fill-current text-primary"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                        <svg class="w-7 h-7 fill-current text-primary"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                        <svg class="w-7 h-7 fill-current text-primary"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                        <svg class="w-7 h-7 fill-current text-dimm" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            World Trigger... This is one manga that is extremely underrated and needs more followers.
+                            With
+                            the end of the longest
+                            arc, I can see just how much talent Ashihara has.
+                            <br>
+                            <br>
+                            Story (may include spoilers, read at own risk):
+                            World Trigger starts off as your normal "aliens invading Earth" story, but proves it self
+                            not to
+                            be. However, as we
+                            learn about the invaders (called Neighbors), we learn that they're so much more, and with
+                            the
+                            revelation of several
+                            Neighbor worlds, a story is set up since our protagonists are going to face it. While it
+                            goes
+                            into softer parts,
+                            especially during training, when the protagonists go to the other worlds, there will be lots
+                            of
+                            suspense; the invasion
+                            arc proved it.
+                            <br>
+                            <br>
+                            Art:
+                            Oh man, the art is amazing and fits a sci-fi setting. Each character, Trigger, and
+                            background is
+                            drawn with so much
+                            detail that you can virtually see the characters moving in battle. And the colour pages are
+                            extremely appealing, anime
+                            worthy.
+                            <br>
+                            <br>
+                            Character (spoilers, read at own risk):
+                            While not World Trigger's biggest point, it certainly deserves to be acknowledged. An
+                            example of
+                            character development
+                            in the series would be Osamu. He is one of the few shonen protagonists who are weak and work
+                            hard for their strength. On
+                            top of that, he has strength in other forms like mental resilience and intelligence, which
+                            Ashihara cleverly uses.
+                            Another example of this would be Chika's high strength but low battle ability.
+                            <br>
+                            <br>
+                            Overall, I have enjoyed the story very much and can see it becoming very successful if
+                            Ashihara
+                            keeps up his unique and
+                            interesting way of storytelling and showing.
+                        </div>
+
+                        <div class="mt-6 p-4 rounded border border-layer flex flex-col">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-10 h-10">
+                                    <img class="rounded w-full h-full object-cover"
+                                        src="https://cdn.myanimelist.net/images/userimages/7453638.jpg?t=1628114400"
+                                        alt="">
+                                </div>
+
+                                <div class="font-semibold text-sm">Toukara</div>
+                                <div class="w-1 h-1 bg-dimm rounded"></div>
+                                <div class="text-dimm font-light text-xs">24/09/2021 | 17:58</div>
+                                <div class="w-1 h-1 bg-dimm rounded"></div>
+                                <div class="text-dimm font-light text-xs">World Trigger</div>
+                            </div>
+
+                            <div class="mt-2">May someone reviews this ?</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="w-44">
+                            <img class="rounded w-full h-full object-cover"
+                                src="https://cdn.myanimelist.net/images/manga/3/184410l.jpg?_gl=1*lao2wl*_ga*MjkwNzQzMjIzLjE2MDc3MTI2OTM.*_ga_26FEP9527K*MTYzNDIyNTMxNi4xNTYuMS4xNjM0MjI2NTM3LjM."
+                                alt="">
+                        </div>
+
+                        <div class="text-center mt-2">
+                            World Trigger
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LIT Reviews - Flux</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <script src="https://kit.fontawesome.com/6a3a505936.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    {% tailwind_css %}
+
+    <style>
+        #__bs_notify__ {
+            display: none !important;
+        }
+
+        .bg-gray-1000 {
+            background-color: #171515;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-100 text-light font-body">
+    <div class="max-w-5xl ml-auto mr-auto">
+        {% include "_components/nav_bar.html" %}
+
+        <section class="mt-24 max-w-3xl ml-auto mr-auto">
+            <div class="flex justify-between space-x-4">
+                <a href="/posts/create"
+                    class="bg-layer w-full border border-layer rounded focus:ring-0 p-5 font-bold text-center">Create a
+                    Review</a>
+                <a href="/posts/request"
+                    class="bg-layer w-full border border-layer rounded focus:ring-0 p-5 font-bold text-center">Request a
+                    Review</a>
+            </div>
+
+            <section>
+                {% for post in posts|dictsortreversed:"time_created" %}
+                <div class="mt-6 bg-layer w-full rounded flex flex-row justify-between p-5">
+                    <div class="flex flex-grow flex-col">
+                        <div class="flex justify-between pb-4 space-x-4">
+                            <div class="flex space-x-4">
+                                <div class="w-20 h-20">
+                                    <img class="rounded w-full h-full object-cover" src="{{ post.user.avatar_url }}"
+                                        alt=" ayaya" />
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="font-semibold text-xl">{{ post.user.username }}</div>
+                                    <div class="text-sm text-dimm">{{ post.time_created|date:'d/m/Y H:i'}}</div>
+                                    <div class="text-sm text-dimm">
+                                        {% if post.ticket %}
+                                        Requesting a review
+                                        {% else %}
+                                        Published a review
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex">
+                                {% if post.ticket %}
+                                <div class="font-semibold text-xl">
+                                    <div class="flex items-center mt-2 mb-4">
+                                        {% for star in "12345"|make_list %}
+                                        {% if star >= rating|add:'0' %}
+                                        <svg class="w-7 h-7 fill-current text-primary"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                        {% else %}
+                                        <svg class="w-7 h-7 fill-current text-dimm" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                        </svg>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% elif post.is_blocked %}
+                                <div class="bg-layer flex items-center rounded px-3 h-8">Review</div>
+
+                                {% else %}
+                                <!-- prettier-ignore -->
+                                <a href="/posts/review/{{post.id}}"
+                                    class="bg-primary flex items-center hover:opacity-95 active:opacity-80 rounded px-3 h-8">Review</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <p style="overflow-wrap: anywhere; white-space: pre-wrap">{{ post.description }}</p>
+
+                        {% if post.ticket %}
+                        <div class="mt-6 p-4 rounded border border-layer flex flex-col">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-10 h-10">
+                                    <img class="rounded w-full h-full object-cover"
+                                        src="{{ post.ticket.user.avatar_url }}" alt="avatar" />
+                                </div>
+
+                                <div class="font-semibold text-sm">{{ post.ticket.user.username }}</div>
+                                <div class="w-1 h-1 bg-dimm rounded"></div>
+                                <div class="text-dimm font-light text-xs">{{ post.time_created|date:'d/m/Y H:i'}}</div>
+                                <div class="w-1 h-1 bg-dimm rounded"></div>
+                                <div class="text-dimm font-light text-xs">{{ post.ticket.title }}</div>
+                            </div>
+
+                            <p class="mt-2" style="overflow-wrap: anywhere; white-space: pre-wrap">
+                                {{post.ticket.description }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex flex-col {% if post.ticket %} order-first mr-4 {% else %} ml-4 {% endif %}">
+                        <div class="w-44">
+                            {% if post.ticket.image.url or post.image %}
+                            <img class="rounded w-full h-full object-cover"
+                                src="{% firstof post.image.url post.ticket.image.url %}" alt="ayaya" />
+                            {% else %}
+                            <img class="rounded w-full h-full object-cover"
+                                src="https://via.placeholder.com/176x276?text=NO IMAGE GIVEN" alt="no img" />
+                            {% endif %}
+                        </div>
+
+                        <div class="text-center mt-2">{{ post.title }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+        </section>
+    </div>
+</body>
+
+</html>

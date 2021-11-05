@@ -1,0 +1,98 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LIT Reviews - Follows</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://kit.fontawesome.com/6a3a505936.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    {% tailwind_css %}
+
+    <style>
+        #__bs_notify__ {
+            display: none !important;
+        }
+
+        .bg-gray-1000 {
+            background-color: #171515;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-100 text-light font-body">
+    <div class="max-w-5xl ml-auto mr-auto">
+        {% include "_components/nav_bar.html" %}
+
+        {% if errors %}
+        <div style="background-color: #f7595948"
+            class="bg-dark-200 mt-24 rounded max-w-3xl ml-auto mr-auto space-y-2 p-5">
+            {% for error in errors %}
+            {{error}}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="." method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <section class="mt-12 max-w-3xl ml-auto mr-auto space-y-2">
+                <h3 class="text-lg font-bold">Title</h3>
+                <div class="flex space-x-2 justify-center">
+                    <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
+                        <input name="title" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                            placeholder="World Trigger" type="text">
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-4 max-w-3xl ml-auto mr-auto space-y-2">
+                <h3 class="text-lg font-bold">Description</h3>
+                <div class="flex space-x-2 justify-center">
+                    <div class="flex flex-col input justify-start bg-dark-200 rounded p-3 flex-1 h-96">
+                        <textarea name="description" maxlength="2048"
+                            class="bg-dark-200 resize-none border-0 focus:ring-0 h-full w-full p-0"
+                            placeholder="This is one manga that is extremely..." type="text"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mt-4 max-w-3xl ml-auto mr-auto space-y-2">
+                <h3 class="text-lg font-bold">Select an image</h3>
+                <div class="flex space-x-2 justify-center">
+                    <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
+                        <input name="image" class="bg-dark-200 border-0 focus:ring-0 w-full p-0" type="file" />
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="mt-8 max-w-3xl ml-auto mr-auto space-y-2 flex justify-end">
+                <div
+                    class="flex input content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                    <button class="bg-primary border-0 focus:ring-0 w-full p-0 font-bold text-left"
+                        type="submit">Submit</button>
+
+                    <div class="pl-3 text-light">
+                        <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path class="stroke-current" d="M24.0081 41L23.9997 23" stroke="#495592" stroke-width="3"
+                                stroke-linecap="butt" stroke-linejoin="round" />
+                            <path class="stroke-current"
+                                d="M40.5178 34.3161C43.8044 32.005 45.2136 27.8302 44.0001 24C42.7866 20.1698 39.0705 18.0714 35.0527 18.0745H32.7317C31.2144 12.1613 26.2082 7.79572 20.1435 7.0972C14.0787 6.39868 8.21121 9.5118 5.38931 14.9253C2.56741 20.3388 3.37545 26.9317 7.42115 31.5035"
+                                stroke="#495592" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
+                            <path class="stroke-current" d="M30.3638 27.636L23.9998 21.2721L17.6358 27.636"
+                                stroke="#495592" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LIT Reviews - Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://kit.fontawesome.com/6a3a505936.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    {% tailwind_css %}
+
+    <style>
+        #__bs_notify__ {
+            display: none !important;
+        }
+
+        .bg-gray-1000 {
+            background-color: #171515;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-100 font-body">
+    <div class="max-w-5xl ml-auto mr-auto">
+        <nav class="flex justify-between content-center">
+            <a href="/">
+                {% load static %}
+                <img class="h-24 w-auto" src="{% static 'LITReviews.svg' %}" alt="L.R">
+            </a>
+        </nav>
+
+        <div class="max-w-lg mt-24 ml-auto mr-auto">
+            <section class="text-light text-center mt-12">
+                <h1 class="text-4xl font-bold">Create your account</h1>
+            </section>
+
+            <section class="text-light text-center flex justify-between mt-12">
+                <form autocomplete="off" method="POST" action="/acc/register/"
+                    class="flex flex-grow flex-col flex-100 space-y-6">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="text-left">
+                        <div class="flex input content-center bg-dark-200 rounded p-3">
+                            {% if field.name == "username" %}
+                            <input name="{{ field.name }}" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                                placeholder="{{ field.label }}" type="text">
+
+                            <div class="pl-3 text-dimm">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="stroke-current" cx="24" cy="12" r="8" stroke="#333" stroke-width="4"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="stroke-current"
+                                        d="M42 44C42 34.0589 33.9411 26 24 26C14.0589 26 6 34.0589 6 44" stroke="#333"
+                                        stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            {% elif field.name == "avatar_url"%}
+                            <input name="{{ field.name }}" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                                placeholder="{{ field.label }}" type="url">
+
+                            <div class="pl-3 text-dimm">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path class="stroke-current"
+                                        d="M24.7071 9.56496L9.85789 24.4142C6.34317 27.9289 6.34317 33.6274 9.85789 37.1421V37.1421C13.3726 40.6568 19.0711 40.6568 22.5858 37.1421L40.2635 19.4645C42.6066 17.1213 42.6066 13.3223 40.2635 10.9792V10.9792C37.9203 8.63603 34.1213 8.63603 31.7782 10.9792L14.1005 28.6568C12.929 29.8284 12.929 31.7279 14.1005 32.8995V32.8995C15.2721 34.0711 17.1716 34.0711 18.3432 32.8995L33.1924 18.0502"
+                                        stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            {% else %}
+                            <input name="{{ field.name }}" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                                placeholder="{{ field.label }}" type="password">
+
+                            <div class="pl-3 text-dimm">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect class="stroke-current" x="7" y="22.0476" width="34" height="22" rx="2"
+                                        fill="#333" stroke="#333" stroke-width="4" stroke-linejoin="round" />
+                                    <path class="stroke-current"
+                                        d="M14 22V14.0047C13.9948 8.87022 17.9227 4.56718 23.0859 4.05117C28.249 3.53516 32.9673 6.97408 34 12.0059"
+                                        stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M24 30V36" stroke="#FFF" stroke-width="4"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="px-2 mt-2">
+                            {% for error in field.errors %}
+                            <div class="py-1">
+                                <p style="color: rgb(230, 73, 73)">{{ error }}</p>
+                            </div>
+                            {% endfor %}
+
+                            {% if field.help_text %}
+                            <small class="text-dimm my-0">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                    <div
+                        class="flex input content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <button class="bg-primary border-0 focus:ring-0 w-full p-0 font-bold text-left"
+                            type="submit">Sign Up</button>
+
+                        <div class="pl-3 text-light">
+                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect width="48" height="48" />
+                                <path class="stroke-current" d="M41.9999 24H5.99992" stroke="#333" stroke-width="4"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path class="stroke-current" d="M30 12L42 24L30 36" stroke="#333" stroke-width="4"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

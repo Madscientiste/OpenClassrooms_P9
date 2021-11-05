@@ -1,0 +1,131 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LIT Reviews - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://kit.fontawesome.com/6a3a505936.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    {% tailwind_css %}
+
+    <style>
+        #__bs_notify__ {
+            display: none !important;
+        }
+
+        .bg-gray-1000 {
+            background-color: #171515;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-100 font-body">
+    <div class="max-w-5xl ml-auto mr-auto">
+        <nav class="flex justify-between content-center">
+            <a href="/">
+                {% load static %}
+                <img class="h-24 w-auto" src="{% static 'LITReviews.svg' %}" alt="L.R">
+            </a>
+        </nav>
+
+        <section class="mt-24">
+            <section class="text-light text-center mt-12">
+                <h1 class="text-4xl font-bold">Login to your account</h1>
+                <h3 class="text-xl text-dimm">Find reviews or create one!</h3>
+            </section>
+
+            <section class="text-light text-center mt-12 flex justify-between">
+                <div class="flex flex-grow flex-col flex-100 space-y-4">
+                    <form action="." method="POST" class="flex flex-col flex-100 space-y-4">
+                        {% csrf_token %}
+                        <div class="flex input content-center bg-dark-200 rounded p-3">
+                            <input name="username" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                                placeholder="Username" type="text">
+
+                            <div class="pl-3 text-dimm">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="stroke-current" cx="24" cy="12" r="8" stroke="#333" stroke-width="4"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="stroke-current"
+                                        d="M42 44C42 34.0589 33.9411 26 24 26C14.0589 26 6 34.0589 6 44" stroke="#333"
+                                        stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="flex input content-center bg-dark-200 rounded p-3">
+                            <input name="password" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                                placeholder="Password" type="password">
+
+                            <div class="pl-3 text-dimm">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect class="stroke-current" x="7" y="22.0476" width="34" height="22" rx="2"
+                                        fill="#333" stroke="#333" stroke-width="4" stroke-linejoin="round" />
+                                    <path class="stroke-current"
+                                        d="M14 22V14.0047C13.9948 8.87022 17.9227 4.56718 23.0859 4.05117C28.249 3.53516 32.9673 6.97408 34 12.0059"
+                                        stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M24 30V36" stroke="#FFF" stroke-width="4"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex input content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                            <button class="bg-primary border-0 focus:ring-0 w-full p-0 font-bold text-left"
+                                type="submit">Login</button>
+
+                            <div class="pl-3 text-light">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="48" height="48" />
+                                    <path class="stroke-current" d="M41.9999 24H5.99992" stroke="#333" stroke-width="4"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M30 12L42 24L30 36" stroke="#333" stroke-width="4"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="px-2 mt-2">
+                        {% if error %}
+                        <div class="py-1">
+                            <p style="color: rgb(230, 73, 73)">{{ error }}</p>
+                        </div>
+
+                        <small class="text-dimm my-0">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="flex justify-center items-center flex-25">
+                    <svg width="51" height="138" viewBox="0 0 51 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M35.6137 3.99911C36.3383 1.33443 39.0858 -0.238355 41.7505 0.48618L46.2472 1.70885C48.9118 2.43338 50.4846 5.18088 49.7601 7.84556L15.458 134.001C14.7335 136.666 11.986 138.238 9.32132 137.514L4.82462 136.291C2.15994 135.567 0.587144 132.819 1.31168 130.154L35.6137 3.99911Z"
+                            fill="white" fill-opacity="0.1" />
+                        <path
+                            d="M16.1862 79.3319C14.9143 79.3319 13.753 79.1199 12.7023 78.6959C11.6516 78.2719 10.7575 77.6452 10.0202 76.8157C9.28288 75.9678 8.71145 74.9263 8.30591 73.6913C7.90038 72.4378 7.69761 70.9908 7.69761 69.3502C7.69761 67.7096 7.90038 66.2718 8.30591 65.0368C8.71145 63.7833 9.28288 62.7419 10.0202 61.9124C10.7575 61.0644 11.6516 60.4285 12.7023 60.0045C13.753 59.5805 14.9143 59.3686 16.1862 59.3686C17.4581 59.3686 18.6194 59.5805 19.6701 60.0045C20.7208 60.4285 21.6148 61.0644 22.3521 61.9124C23.0894 62.7419 23.6609 63.7833 24.0664 65.0368C24.4719 66.2718 24.6747 67.7096 24.6747 69.3502C24.6747 70.9908 24.4719 72.4378 24.0664 73.6913C23.6609 74.9263 23.0894 75.9678 22.3521 76.8157C21.6148 77.6452 20.7208 78.2719 19.6701 78.6959C18.6194 79.1199 17.4581 79.3319 16.1862 79.3319ZM16.1862 75.5991C17.4581 75.5991 18.4442 75.1844 19.1447 74.3549C19.8636 73.5254 20.2231 72.3364 20.2231 70.788V67.9124C20.2231 66.364 19.8636 65.1751 19.1447 64.3456C18.4442 63.5161 17.4581 63.1013 16.1862 63.1013C14.9143 63.1013 13.9189 63.5161 13.2 64.3456C12.4995 65.1751 12.1493 66.364 12.1493 67.9124V70.788C12.1493 72.3364 12.4995 73.5254 13.2 74.3549C13.9189 75.1844 14.9143 75.5991 16.1862 75.5991ZM32.3854 79.0001H28.1826V59.7004H37.3347C38.2195 59.7004 39.0214 59.8478 39.7403 60.1428C40.4592 60.4377 41.0675 60.8617 41.5652 61.4147C42.0813 61.9492 42.4776 62.5944 42.7541 63.3502C43.0306 64.1059 43.1689 64.9446 43.1689 65.8663C43.1689 67.1751 42.874 68.3179 42.2841 69.2949C41.7127 70.2719 40.8371 70.9816 39.6573 71.424L43.4454 79.0001H38.7725L35.3992 71.9217H32.3854V79.0001ZM36.8094 68.3825C37.4361 68.3825 37.9246 68.2258 38.2748 67.9124C38.6435 67.5806 38.8278 67.1013 38.8278 66.4746V65.258C38.8278 64.6313 38.6435 64.1612 38.2748 63.8479C37.9246 63.5161 37.4361 63.3502 36.8094 63.3502H32.3854V68.3825H36.8094Z"
+                            fill="#C5C5C5" />
+                    </svg>
+                </div>
+
+                <div class="flex flex-col flex-100 justify-center">
+                    <a href="/acc/register"
+                        class="border-primary flex justify-center items-center border-2 rounded px-7 w-full h-12 hover:opacity-90 active:opacity-80">Sign
+                        Up</a>
+                </div>
+            </section>
+        </section>
+    </div>
+</body>
+
+</html>
