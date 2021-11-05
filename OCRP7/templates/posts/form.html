@@ -1,0 +1,96 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LIT Reviews - Follows</title>
+    {% include "_components/head.html" %}
+</head>
+
+<body class="bg-dark-100 text-light font-body">
+    <div class="max-w-5xl ml-auto mr-auto">
+        {% include "_components/nav_bar.html" %}
+
+        {% if errors %}
+        <div style="background-color: #f7595948"
+            class="bg-dark-200 mt-24 rounded max-w-3xl ml-auto mr-auto space-y-2 p-5">
+            {% for error in errors %}
+            {{error}}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <section class="mt-12 max-w-3xl ml-auto mr-auto space-y-4">
+        <form class="space-y-4" method="POST" action="{% if ticket %}{{ticket.id}}{% else %}.{% endif %}"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <input name="type" value="{{form_type}}" class="hidden" />
+
+            {% for field in form %}
+            {% if field.name == "title" %}
+            <section>
+                <h3 class="text-lg font-bold">{{ field.label }}</h3>
+                <div class="flex space-x-2 justify-center">
+                    <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
+                        <input name="{{ field.name }}" value="{{ field.initial }}"
+                            class="bg-dark-200 border-0 focus:ring-0 w-full p-0" placeholder="World Trigger"
+                            type="text">
+                    </div>
+                </div>
+            </section>
+            {% elif field.name == "description" %}
+            <section class="mt-4 max-w-3xl ml-auto mr-auto space-y-2">
+                <h3 class="text-lg font-bold">Description</h3>
+                <div class="flex space-x-2 justify-center">
+                    <div class="flex flex-col input justify-start bg-dark-200 rounded p-3 flex-1 h-96">
+                        <textarea name="{{ field.name }}" maxlength="2048"
+                            class="bg-dark-200 resize-none border-0 focus:ring-0 h-full w-full p-0"
+                            placeholder="This is one manga that is extremely..."
+                            type="text">{{ field.initial }}</textarea>
+                    </div>
+                </div>
+            </section>
+            {% elif field.name == "rating"%}
+            <section>
+                <h3 class="text-lg font-bold">Book Rating</h3>
+                <div class="flex space-x-4">
+                    {% for n in "12345"|make_list %}
+                    <div class="flex flex-col text-center">
+                        <label class="select-none">1</label>
+                        <input type="radio" name="rating" value="1">
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% elif field.name == "image"%}
+            <section class="mt-4 max-w-3xl ml-auto mr-auto space-y-2">
+                {% if field.initial %}
+                <h3 class="text-lg font-bold">Select an image</h3>
+                <div class="flex space-x-2 justify-center">
+                    <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
+                        <input name="{{ field.name }}" value="{{ field.initial.name }}"
+                            class="bg-dark-200 border-0 focus:ring-0 w-full p-0" type="file" />
+                    </div>
+
+                    <div class="w-44">
+                        <img class="rounded w-full h-full object-cover" src="{{ field.initial.url }}" alt="ayaya" />
+                    </div>
+                </div>
+                {% else %}
+                <div class="w-44">
+                    {% if field.initial.url %}
+                    <img class="rounded w-full h-full object-cover" src="{{ field.initial.url }}" alt="ayaya" />
+                    {% else %}
+                    <img class="rounded w-full h-full object-cover"
+                        src="https://via.placeholder.com/176x276?text=NO IMAGE GIVEN" alt="no img" />
+                    {% endif %}
+                </div>
+                {% endif %}
+            </section>
+            {% endif %}
+            {% endfor %}
+        </form>
+    </section>
+</body>
+
+</html>
