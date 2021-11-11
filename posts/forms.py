@@ -9,8 +9,6 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    image = forms.ImageField(required=False)
-
     class Meta:
         model = Review
         fields = ["title", "description", "rating"]

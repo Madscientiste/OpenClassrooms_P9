@@ -50,7 +50,7 @@ class CurrentPosts(LoginRequired, TemplateView):
 
 
 class ReviewPosts(LoginRequired, TemplateView):
-    template_name = "posts/create.html"
+    template_name = "posts/form.html"
 
     def get(self, req: HttpRequest, post_id):
         ticket = Ticket.objects.filter(id=post_id).first()
@@ -72,14 +72,15 @@ class ReviewPosts(LoginRequired, TemplateView):
             return redirect("/posts/flux/")
 
         errors = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
-        return render(req, self.template_name, {"errors": errors})
+        return render(req, self.template_name, {"ticket": ticket_form, "error": errors})
 
 
 class CreatePost(LoginRequired, TemplateView):
-    template_name = "posts/create.html"
+    template_name = "posts/form.html"
 
     def get(self, req: HttpRequest):
-        return render(req, self.template_name)
+        ticket_form = ReviewForm(req.POST, req.FILES)
+        return render(req, self.template_name, {"form": ticket_form, "form_type": "create"})
 
     def post(self, req: HttpRequest):
         ticket_form = ReviewForm(req.POST, req.FILES)
@@ -95,15 +96,15 @@ class CreatePost(LoginRequired, TemplateView):
 
             return redirect("/posts/flux/")
 
-        errors = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
-        return render(req, self.template_name, {"errors": errors})
+        return render(req, self.template_name, {"form": ticket_form, "form_type": "create"})
 
 
 class RequestPost(LoginRequired, TemplateView):
-    template_name = "posts/request.html"
+    template_name = "posts/form.html"
 
     def get(self, req: HttpRequest):
-        return render(req, self.template_name)
+        ticket_form = TicketForm()
+        return render(req, self.template_name, {"form": ticket_form, "form_type": "request"})
 
     def post(self, req: HttpRequest):
         ticket_form = TicketForm(req.POST, req.FILES)
@@ -115,4 +116,4 @@ class RequestPost(LoginRequired, TemplateView):
             return redirect("/posts/flux/")
 
         errors = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
-        return render(req, self.template_name, {"errors": errors})
+        return render(req, self.template_name, {"form": ticket_form, "form_type": "request", "errors": errors})
