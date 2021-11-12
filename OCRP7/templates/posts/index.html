@@ -11,17 +11,16 @@
     <div class="max-w-5xl ml-auto mr-auto">
         {% include "_components/nav_bar.html" %}
 
-        <section class="my-4 max-w-3xl ml-auto mr-auto space-y-8">
+        <section class="my-4 max-w-3xl ml-auto mr-auto space-y-10">
             {% for post in posts|dictsortreversed:"time_created" %}
-            <section class="flex flex-col">
+            <section class="flex flex-col space-y-4">
                 <div class="flex justify-end space-x-4">
                     <div
-                        class="flex https://via.placeholder.com/176x276?text=NO IMAGE GIVENinput content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        <form action="." method="post">
-                            {% csrf_token %}
-                            <input name="delete" value="{{post.id}}" class="hidden" />
-                            <input name="type" value="{% if post.ticket %}review{% else %}ticket{% endif %}"
-                                class="hidden" />
+                        class="flex content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <form action="delete/{% if post.ticket %}review{% else %}ticket{% endif %}/{{post.id}}"
+                            method="get">
+                            <!-- {% csrf_token %} -->
+                            <!-- <input name="delete" value="true" class="hidden" /> -->
                             <button class="border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
                                 Delete
                             </button>
@@ -47,11 +46,10 @@
                     <div
                         class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
 
-                        <form name="edit" action="." method="post">
-                            {% csrf_token %}
-                            <input name="edit" value="{{post.id}}" class="hidden" />
-                            <input name="type" value="{% if post.ticket %}review{% else %}ticket{% endif %}"
-                                class="hidden" />
+                        <form action="edit/{% if post.ticket %}review{% else %}ticket{% endif %}/{{post.id}}"
+                            method="get">
+                            <!-- {% csrf_token %} -->
+                            <!-- <input name="delete" value="false" class="hidden" /> -->
                             <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
                                 Edit Post
                             </button>

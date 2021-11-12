@@ -13,24 +13,60 @@
     </div>
 
     <section class="mt-12 max-w-3xl ml-auto mr-auto space-y-4">
-        {% if errors %}
+        {% if form_error %}
         <div style="background-color: #f7595948"
             class="bg-dark-200 mt-24 rounded max-w-3xl ml-auto mr-auto space-y-2 p-5">
-            {% for error in errors %}
+            {% for error in form_error %}
             <p>{{error}}</p>
             {% endfor %}
         </div>
         {% endif %}
 
-        <form method="POST" action="{% if ticket %}{{ticket.id}}{% else %}.{% endif %}" enctype="multipart/form-data">
+        {% if ticket %}
+        <section class="space-y-4">
+            <h2>You are reviewing this post </h2>
+            <div class="mt-6 border border-primary w-full rounded flex flex-row justify-between p-5">
+                <div class="flex flex-col">
+                    <div class="w-44">
+                        <img class="rounded w-full h-full object-cover" src="{{ticket.image.url}}" alt="">
+                    </div>
+
+                    <div class="text-center mt-2 w-44">
+                        {{ticket.title}}
+                    </div>
+                </div>
+
+                <div class="flex flex-grow flex-col ml-6">
+                    <div class="flex justify-between pb-4 space-x-4">
+                        <div class="flex space-x-4">
+                            <div class="w-20 h-20">
+                                <img class="rounded w-full h-full object-cover" src="{{ticket.user.avatar_url}}"
+                                    alt="ayaya">
+                            </div>
+
+                            <div class="flex flex-col">
+                                <div class="font-semibold text-xl">{{ticket.user.username}}</div>
+                                <div class="text-sm text-dimm">{{ ticket.time_created|date:'d/m/Y H:i'}}</div>
+                                <div class="text-sm text-dimm">Requesting a review</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="overflow-wrap: anywhere;white-space: pre-wrap;">{{ ticket.description }}</p>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <form method="POST" action="{% firstof post.id '' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <input name="type" value="{{form_type}}" class="hidden" />
+            <!-- <input name="type" value="{{form_type}}" class="hidden" /> -->
 
             <div class="flex space-x-4">
                 <!-- Image -->
+                {% for field in form %}
+                {% if field.name == "image"%}
                 <div class="flex flex-col">
-                    {% for field in form %}
-                    {% if field.name == "image"%}
                     <section>
                         <h3 class="text-lg font-bold">Image</h3>
                         <div class="flex flex-col space-y-6">
@@ -45,6 +81,7 @@
                                     src="https://via.placeholder.com/176x276?text=NO IMAGE GIVEN" alt="no img" />
                             </div>
                             {% endif %}
+
                             <div onclick="selectImage()"
                                 class="flex justify-between bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
                                 <p>{% if field.initial %} Repalce {% else %} Select {% endif %} Image</p>
@@ -65,9 +102,9 @@
                             </div>
                         </div>
                     </section>
-                    {% endif %}
-                    {% endfor %}
                 </div>
+                {% endif %}
+                {% endfor %}
 
                 <!-- Content -->
                 <div class="flex flex-col flex-100 space-y-6">
@@ -100,7 +137,11 @@
                             {% for n in "12345"|make_list %}
                             <div class="flex flex-col text-center">
                                 <label class="select-none">{{n}}</label>
-                                <input type="radio" name="rating" value="{{n}}">
+                                {% if field.initial == n|add:'0' %}
+                                <input name="{{ field.name }}" value="{{n}}" type="radio" checked>
+                                {% else %}
+                                <input name="{{ field.name }}" value="{{n}}" type="radio">
+                                {% endif %}
                             </div>
                             {% endfor %}
                         </div>

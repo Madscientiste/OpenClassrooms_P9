@@ -1,4 +1,4 @@
-<div class="mt-6 bg-layer w-full rounded flex flex-row justify-between p-5">
+<div class="bg-layer w-full rounded flex flex-row justify-between p-5">
     <div class="flex flex-grow flex-col">
         <div class="flex justify-between pb-4 space-x-4">
             <div class="flex space-x-4">
@@ -44,7 +44,7 @@
 
                 {% else %}
                 <!-- prettier-ignore -->
-                <a href="/posts/review/{{post.id}}"
+                <a href="/posts/reply/{{post.id}}"
                     class="bg-primary flex items-center hover:opacity-95 active:opacity-80 rounded px-3 h-8">Review</a>
                 {% endif %}
             </div>
@@ -62,7 +62,7 @@
 
                 <div class="font-semibold text-sm">{{ post.ticket.user.username }}</div>
                 <div class="w-1 h-1 bg-dimm rounded"></div>
-                <div class="text-dimm font-light text-xs">{{ post.time_created|date:'d/m/Y H:i'}}</div>
+                <div class="text-dimm font-light text-xs">{{ post.ticket.time_created|date:'d/m/Y H:i'}}</div>
                 <div class="w-1 h-1 bg-dimm rounded"></div>
                 <div class="text-dimm font-light text-xs">{{ post.ticket.title }}</div>
             </div>

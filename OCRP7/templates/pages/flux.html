@@ -12,15 +12,15 @@
 
         <section class="mt-24 max-w-3xl ml-auto mr-auto">
             <div class="flex justify-between space-x-4">
-                <a href="/posts/create"
+                <a href="/posts/reply/none"
                     class="bg-layer w-full border border-layer rounded focus:ring-0 p-5 font-bold text-center">Create a
                     Review</a>
-                <a href="/posts/request"
+                <a href="/posts/create"
                     class="bg-layer w-full border border-layer rounded focus:ring-0 p-5 font-bold text-center">Request a
                     Review</a>
             </div>
 
-            <section>
+            <section class="space-y-4 mt-12">
                 {% for post in posts|dictsortreversed:"time_created" %}
                 {% include "_components/post.html" %}
                 {% endfor %}

@@ -11,14 +11,14 @@
     <div class="max-w-5xl ml-auto mr-auto">
         {% include "_components/nav_bar.html" %}
 
-
         <section>
-            <section class="mt-24 max-w-3xl ml-auto mr-auto space-y-2">
+            <form method="post" action="." class="mt-24 max-w-3xl ml-auto mr-auto space-y-2">
+                {% csrf_token %}
                 <h3 class="text-xl font-bold">Follow a User</h3>
                 <div class="flex space-x-2 justify-center">
                     <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
-                        <input class="bg-dark-200 border-0 focus:ring-0 w-full p-0" placeholder="User to follow..."
-                            type="text">
+                        <input name="follow" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
+                            placeholder="User to follow..." type="text">
                     </div>
 
                     <div
@@ -45,17 +45,22 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </form>
 
             <section class="mt-24 max-w-3xl ml-auto mr-auto space-y-2">
                 <h3 class="text-xl font-bold">Followers</h3>
-                <div class="flex space-x-2 justify-center">
+                {% for username in followers %}
+                <form method="post" action="." class="flex space-x-2 justify-center">
                     <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
-                        <h4>Toukara</h4>
+                        <h4>{{username}}</h4>
                     </div>
 
+                    {% if not username in following %}
                     <div
                         class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        {% csrf_token %}
+                        <input class="hidden" name="follow_back" value="{{username}}" type="text">
+
                         <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">Follow
                             Back</button>
 
@@ -69,18 +74,38 @@
                             </svg>
                         </div>
                     </div>
+                    {% endif %}
+                </form>
+                {% endfor %}
+
+                {% if not followers %}
+                <div
+                    class="flex mt-12 bg-layer text-light flex-col p-3 rounded justify-center items-center space-x-3 h-32">
+                    <div class="icon">
+                        <svg width="64" height="64" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path class="stroke-current"
+                                d="M24 31L21 26L28 20L19 15L20 9.19942C18.4999 8.43256 16.8004 8 15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C31.1996 8 29.5001 8.43256 28 9.19942"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <!-- <h3 class="text-xl">Nothing to see here</h3> -->
                 </div>
+                {% endif %}
             </section>
 
             <section class="mt-24 max-w-3xl ml-auto mr-auto space-y-2">
                 <h3 class="text-xl font-bold">Following</h3>
-                <div class="flex space-x-2 justify-center">
+                {% for username in following %}
+                <form method="post" action="." class="flex space-x-2 justify-center">
                     <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
-                        <h4>AYAYA80</h4>
+                        <h4>{{username}}</h4>
                     </div>
 
                     <div
                         class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        {% csrf_token %}
+
+                        <input class="hidden" name="un_follow" value="{{username}}" type="text">
                         <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
                             Un Follow
                         </button>
@@ -101,7 +126,22 @@
                             </svg>
                         </div>
                     </div>
+                </form>
+                {% endfor %}
+
+                {% if not following %}
+                <div
+                    class="flex mt-12 bg-layer text-light flex-col p-3 rounded justify-center items-center space-x-3 h-32">
+                    <div class="icon">
+                        <svg width="64" height="64" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path class="stroke-current"
+                                d="M24 31L21 26L28 20L19 15L20 9.19942C18.4999 8.43256 16.8004 8 15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C31.1996 8 29.5001 8.43256 28 9.19942"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <!-- <h3 class="text-xl">Nothing to see here</h3> -->
                 </div>
+                {% endif %}
             </section>
         </section>
     </div>

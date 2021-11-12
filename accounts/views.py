@@ -3,8 +3,10 @@ from django.http.request import HttpRequest
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
+from django.db import IntegrityError
 
 from .forms import SignUpForm
+from .models import User, UserFollows
 
 
 class LoginRequired(LoginRequiredMixin):
@@ -14,9 +16,50 @@ class LoginRequired(LoginRequiredMixin):
 class FollowsPage(LoginRequired, TemplateView):
     template_name = "pages/follows.html"
 
+    def get_followers(self, user):
+        followers = UserFollows.objects.filter(followed_user=user)
+        return followers.values_list("user__username", flat=True)
+
+    def get_following(self, user):
+        following = UserFollows.objects.filter(user=user)
+        return following.values_list("followed_user__username", flat=True)
+
     def get(self, req: HttpRequest):
-        print(req.user.avatar_url)
-        return render(req, self.template_name)
+        following = self.get_following(req.user)
+        followers = self.get_followers(req.user)
+
+        return render(req, self.template_name, {"following": following, "followers": followers})
+
+    def post(self, req: HttpRequest):
+        following = self.get_following(req.user)
+        followers = self.get_followers(req.user)
+
+        try_follow = req.POST.get("follow", None)
+        un_follow = req.POST.get("un_follow", None)
+        follow_back = req.POST.get("follow_back", None)
+
+        error = None
+
+        try:
+            if try_follow or follow_back:
+                user = User.objects.get(username=try_follow or follow_back)
+
+                if user:
+                    user_follows = UserFollows(user=req.user, followed_user=user)
+                    user_follows.save()
+
+            elif un_follow:
+                user = User.objects.get(username=un_follow)
+
+                if user:
+                    obj = UserFollows.objects.filter(user=req.user, followed_user=user)
+                    obj.delete()
+        
+        except IntegrityError as err:
+            if "unique constraint" in err.args:
+                error = "You are already following this user"
+
+        return render(req, self.template_name, {"error": error, "following": following, "followers": followers})
 
 
 class RegisterPage(TemplateView):

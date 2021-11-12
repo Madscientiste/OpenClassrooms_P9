@@ -37,13 +37,17 @@ class CurrentPosts(LoginRequired, TemplateView):
         is_ticket = req.POST.get("type") == "ticket"
 
         model = Ticket if is_ticket else Review
-        ticket = model.objects.get(id=delete or edit)
+        instance = model.objects.get(id=delete or edit)
 
         form = TicketForm if is_ticket else ReviewForm
-        form = form(instance=ticket)
+        form = form(instance=instance)
 
         if delete:
-            ticket.delete()
+            if not is_ticket:
+                instance.ticket.is_blocked = False
+                instance.ticket.save()
+            instance.delete()
+
             return redirect("/posts")
         elif edit:
             return render(req, "posts/form.html", {"form": form, "form_type": "update"})
@@ -53,67 +57,68 @@ class ReviewPosts(LoginRequired, TemplateView):
     template_name = "posts/form.html"
 
     def get(self, req: HttpRequest, post_id):
+        form = ReviewForm()
         ticket = Ticket.objects.filter(id=post_id).first()
 
         if not ticket:
             return redirect("/posts/request/")
         else:
-            return render(req, self.template_name, {"ticket": ticket})
+            return render(req, self.template_name, {"form": form, "ticket": ticket})
 
     def post(self, req: HttpRequest, post_id):
-        ticket_form = ReviewForm(req.POST, req.FILES)
+        form = ReviewForm(req.POST, req.FILES)
         ticket = Ticket.objects.filter(id=post_id).first()
 
-        if ticket_form.is_valid() and ticket:
-            rating = {**ticket_form.cleaned_data}
-            del rating["image"]
-            rating = Review.objects.create(**rating, ticket=ticket, user=req.user)
-
+        if form.is_valid() and ticket:
+            Review.objects.create(**form.cleaned_data, ticket=ticket, user=req.user)
+            ticket.is_blocked = True
+            ticket.save()
             return redirect("/posts/flux/")
 
-        errors = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
-        return render(req, self.template_name, {"ticket": ticket_form, "error": errors})
+        form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
+        return render(req, self.template_name, {"form": form, "form_error": form_error})
 
 
 class CreatePost(LoginRequired, TemplateView):
     template_name = "posts/form.html"
 
     def get(self, req: HttpRequest):
-        ticket_form = ReviewForm(req.POST, req.FILES)
-        return render(req, self.template_name, {"form": ticket_form, "form_type": "create"})
+        form = ReviewForm()
+        return render(req, self.template_name, {"form": form})
 
     def post(self, req: HttpRequest):
-        ticket_form = ReviewForm(req.POST, req.FILES)
+        form = ReviewForm(req.POST, req.FILES)
 
-        if ticket_form.is_valid():
-            ticket = {**ticket_form.cleaned_data}
+        if form.is_valid():
+            ticket = {**form.cleaned_data}
             del ticket["rating"]
             ticket = Ticket.objects.create(**ticket, user=req.user)
 
-            rating = {**ticket_form.cleaned_data}
+            rating = {**form.cleaned_data}
             del rating["image"]
             rating = Review.objects.create(**rating, ticket=ticket, user=req.user)
 
             return redirect("/posts/flux/")
 
-        return render(req, self.template_name, {"form": ticket_form, "form_type": "create"})
+        form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
+        return render(req, self.template_name, {"form": form, "form_error": form_error})
 
 
 class RequestPost(LoginRequired, TemplateView):
     template_name = "posts/form.html"
 
     def get(self, req: HttpRequest):
-        ticket_form = TicketForm()
-        return render(req, self.template_name, {"form": ticket_form, "form_type": "request"})
+        form = TicketForm()
+        return render(req, self.template_name, {"form": form})
 
     def post(self, req: HttpRequest):
-        ticket_form = TicketForm(req.POST, req.FILES)
+        form = TicketForm(req.POST, req.FILES)
 
-        if ticket_form.is_valid():
-            data = ticket_form.cleaned_data
+        if form.is_valid():
+            data = form.cleaned_data
             Ticket.objects.create(**data, user=req.user)
 
             return redirect("/posts/flux/")
 
-        errors = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
-        return render(req, self.template_name, {"form": ticket_form, "form_type": "request", "errors": errors})
+        form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
+        return render(req, self.template_name, {"form": form, "form_error": form_error})
