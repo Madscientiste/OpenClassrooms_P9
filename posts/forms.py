@@ -1,4 +1,5 @@
 from django import forms
+from django.http import request
 from .models import Review, Ticket
 
 
@@ -11,4 +12,4 @@ class TicketForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ["title", "description", "rating"]
+        fields = ["headline", "body", "rating"]

@@ -12,19 +12,51 @@ class CreateReply(LoginRequired, TemplateView):
     template_name = "posts/form.html"
 
     def get(self, req: HttpRequest, post_id):
-        form = ReviewForm()
+        review_form = ReviewForm()
+        ticket_form = TicketForm()
+        ctx = {}
+
         ticket = Ticket.objects.filter(id=post_id).first() if not post_id == "none" else None
-        return render(req, self.template_name, {"form": form, "ticket": ticket})
+        ctx["ticket"] = ticket
+        ctx["review_form"] = review_form
+
+        if not ticket:
+            ctx["ticket_form"] = ticket_form
+
+        return render(req, self.template_name, ctx)
 
     def post(self, req: HttpRequest, post_id):
-        form = ReviewForm(req.POST, req.FILES)
-        ticket = Ticket.objects.filter(id=post_id).first()
+        ticket_form = TicketForm(req.POST, req.FILES)
+        review_form = ReviewForm(req.POST)
+        ctx = {}
 
-        if form.is_valid() and ticket:
-            Review.objects.create(**form.cleaned_data, ticket=ticket, user=req.user)
-            ticket.is_blocked = True
-            ticket.save()
-            return redirect("/posts/flux/")
+        ticket = Ticket.objects.filter(id=post_id).first() if not post_id == "none" else None
+        ctx["ticket"] = ticket
+        ctx["review_form"] = review_form
 
-        form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
-        return render(req, self.template_name, {"form": form, "form_error": form_error})
+        if not ticket:
+            ctx["ticket_form"] = ticket_form
+
+            tf_valid = ticket_form.is_valid()
+            rf_valid = review_form.is_valid()
+
+            if rf_valid and tf_valid:
+                ticket = Ticket.objects.create(**ticket_form.cleaned_data, user=req.user)
+                Review.objects.create(**review_form.cleaned_data, ticket=ticket, user=req.user)
+                return redirect("/")
+
+        else:
+            rf_valid = review_form.is_valid()
+
+            if rf_valid:
+                ticket.is_blocked = True
+                Review.objects.create(**review_form.cleaned_data, ticket=ticket, user=req.user)
+                ticket.save()
+
+                return redirect("/")
+
+        form_a = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
+        form_b = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in review_form.errors.items()]
+        ctx["form_errors"] = form_a + form_b
+
+        return render(req, self.template_name, ctx)

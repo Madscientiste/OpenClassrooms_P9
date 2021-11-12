@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <p style="overflow-wrap: anywhere; white-space: pre-wrap">{{ post.description }}</p>
+        <p style="overflow-wrap: anywhere; white-space: pre-wrap">{% firstof post.body post.description %}</p>
 
         {% if post.ticket %}
         <div class="mt-6 p-4 rounded border border-layer flex flex-col">
@@ -84,6 +84,6 @@
             {% endif %}
         </div>
 
-        <div style="overflow-wrap: break-word" class="text-center mt-2">{{ post.title }}</div>
+        <div style="overflow-wrap: break-word" class="text-center mt-2">{% firstof post.title post.headline %}</div>
     </div>
 </div>

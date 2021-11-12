@@ -54,11 +54,12 @@ class FollowsPage(LoginRequired, TemplateView):
                 if user:
                     obj = UserFollows.objects.filter(user=req.user, followed_user=user)
                     obj.delete()
-        
-        except IntegrityError as err:
-            if "unique constraint" in err.args:
-                error = "You are already following this user"
 
+        except IntegrityError:
+            error = "You are already following this user"
+        except User.DoesNotExist:
+            error = "User does not exist"
+ 
         return render(req, self.template_name, {"error": error, "following": following, "followers": followers})
 
 

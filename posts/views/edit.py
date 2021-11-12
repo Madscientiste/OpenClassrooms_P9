@@ -23,7 +23,7 @@ class EditPost(LoginRequired, TemplateView):
                 return render(
                     req,
                     self.template_name,
-                    {"form": form, "post": post, "ticket": getattr(post, "ticket", None)},
+                    {post_type + "_form": form, "post": post, "ticket": getattr(post, "ticket", None)},
                 )
 
         return redirect("/posts/")
@@ -36,7 +36,7 @@ class EditPost(LoginRequired, TemplateView):
             post = instance.objects.get(id=post_id)
 
             if post:
-                form = form(req.POST, instance=post)
+                form = form(req.POST, req.FILES, instance=post)
 
                 if form.is_valid():
                     form.save()

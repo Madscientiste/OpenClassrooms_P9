@@ -12,17 +12,17 @@ class CreateTicket(LoginRequired, TemplateView):
     template_name = "posts/form.html"
 
     def get(self, req: HttpRequest) -> HttpRequest:
-        form = TicketForm()
-        return render(req, self.template_name, {"form": form})
+        ticket_form = TicketForm()
+        return render(req, self.template_name, {"ticket_form": ticket_form})
 
     def post(self, req: HttpRequest):
-        form = TicketForm(req.POST, req.FILES)
+        ticket_form = TicketForm(req.POST, req.FILES)
 
-        if form.is_valid():
-            data = form.cleaned_data
+        if ticket_form.is_valid():
+            data = ticket_form.cleaned_data
             Ticket.objects.create(**data, user=req.user)
 
             return redirect("/posts/flux/")
 
-        form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
-        return render(req, self.template_name, {"form": form, "form_error": form_error})
+        form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
+        return render(req, self.template_name, {"ticket_form": ticket_form, "form_errors": form_error})
