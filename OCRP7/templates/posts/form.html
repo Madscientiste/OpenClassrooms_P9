@@ -189,11 +189,10 @@
                     {% endfor %}
 
                     {% if ticket_form or review_form %}
-                    <section class="space-y-2 flex justify-end">
-                        <div
-                            class="flex input content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                            <button class="bg-primary border-0 focus:ring-0 w-full p-0 font-bold text-left"
-                                type="submit">Submit</button>
+                    <section class="flex space-y-2 justify-end">
+                        <button
+                            class="flex content-center bg-primary border-0 focus:ring-0 rounded p-3 hover:opacity-95 active:opacity-90 font-bold text-left"
+                            type="submit">Submit
 
                             <div class="pl-3 text-light">
                                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
@@ -209,7 +208,7 @@
                                         stroke-linejoin="round" />
                                 </svg>
                             </div>
-                        </div>
+                        </button>
                     </section>
                     {% endif %}
                 </div>

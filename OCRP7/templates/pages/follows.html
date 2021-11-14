@@ -21,10 +21,10 @@
                             placeholder="User to follow..." type="text">
                     </div>
 
-                    <div
-                        class="flex input content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        <button class="bg-primary border-0 focus:ring-0 w-full p-0 font-bold text-left"
-                            type="submit">Follow</button>
+                    <button
+                        class="flex content-center bg-primary border-0 focus:ring-0 rounded p-3 hover:opacity-95 active:opacity-90 font-bold text-left"
+                        type="submit">Follow
+
 
                         <div class="pl-3 text-light">
                             <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
@@ -43,7 +43,7 @@
                                     stroke="#495592" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
                             </svg>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
                 <div class="px-2 h-4">
@@ -59,19 +59,18 @@
                 <h3 class="text-xl font-bold">Followers</h3>
                 {% for username in followers %}
                 <form method="post" action="." class="flex space-x-2 justify-center">
+                    {% csrf_token %}
+
                     <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
                         <h4>{{username}}</h4>
+                        <input class="hidden" name="follow_back" value="{{username}}" type="text">
                     </div>
 
                     {% if not username in following %}
-                    <div
-                        class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        {% csrf_token %}
-                        <input class="hidden" name="follow_back" value="{{username}}" type="text">
-
-                        <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">Follow
-                            Back</button>
-
+                    <button
+                        class="flex content-center rounded p-3 hover:opacity-95 active:opacity-90 bg-layer border-0 focus:ring-0 font-bold text-left"
+                        type="submit">Follow
+                        Back
                         <div class="pl-3 text-light">
                             <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +80,7 @@
                                     stroke-linecap="butt" stroke-linejoin="round" />
                             </svg>
                         </div>
-                    </div>
+                    </button>
                     {% endif %}
                 </form>
                 {% endfor %}
@@ -105,18 +104,17 @@
                 <h3 class="text-xl font-bold">Following</h3>
                 {% for username in following %}
                 <form method="post" action="." class="flex space-x-2 justify-center">
+                    {%csrf_token %}
+
                     <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
                         <h4>{{username}}</h4>
+                        <input class="hidden" name="un_follow" value="{{username}}" type="text">
                     </div>
 
-                    <div
-                        class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        {% csrf_token %}
-
-                        <input class="hidden" name="un_follow" value="{{username}}" type="text">
-                        <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
-                            Un Follow
-                        </button>
+                    <button
+                        class="flex bg-layer content-center border-0 focus:ring-0 rounded p-3 hover:opacity-95 active:opacity-90 font-bold text-left"
+                        type="submit">
+                        Un Follow
 
                         <div class="pl-3 text-light">
                             <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
@@ -133,7 +131,8 @@
                                     stroke="#495592" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
                             </svg>
                         </div>
-                    </div>
+                    </button>
+
                 </form>
                 {% endfor %}
 

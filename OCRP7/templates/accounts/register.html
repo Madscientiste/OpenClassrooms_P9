@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-dark-100 font-body">
-    <div class="ml-auto mr-auto max-w-2xl md:max-w-3xl lg:max-w-5xl">
+    <div class="ml-auto mt-3 mr-auto max-w-2xl md:max-w-3xl lg:max-w-5xl">
         <nav class="flex justify-between content-center">
             <a href="/">
                 {% load static %}
@@ -116,10 +116,9 @@
                     </div>
                     {% endfor %}
 
-                    <div
-                        class="flex content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        <button class="bg-primary border-0 focus:ring-0 w-full p-0 text-left font-bold"
-                            type="submit">Sign Up</button>
+                    <button
+                        class="flex content-center justify-between bg-primary border-0 focus:ring-0 rounded p-3 hover:opacity-95 active:opacity-90 font-bold text-left"
+                        type="submit">Sign Up
 
                         <div class="pl-3 text-light">
                             <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
@@ -131,7 +130,7 @@
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </div>
-                    </div>
+                    </button>
             </form>
         </main>
     </div>

@@ -15,65 +15,56 @@
             {% for post in posts|dictsortreversed:"time_created" %}
             <section class="flex flex-col space-y-4">
                 <div class="flex justify-end space-x-4">
-                    <div
-                        class="flex content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        <form action="delete/{% if post.ticket %}review{% else %}ticket{% endif %}/{{post.id}}"
-                            method="get">
-                            <!-- {% csrf_token %} -->
-                            <!-- <input name="delete" value="true" class="hidden" /> -->
-                            <button class="border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
-                                Delete
-                            </button>
-                        </form>
+                    <form action="delete/{% if post.ticket %}review{% else %}ticket{% endif %}/{{post.id}}" method="get"
+                        class="bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <button class="flex content-center border-0 focus:ring-0 w-full p-0 font-bold text-left"
+                            type="submit">
+                            Delete
+                            <div class="pl-3 text-light">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path class="stroke-current" d="M9 10V44H39V10H9Z" fill="none" stroke="#ffffff"
+                                        stroke-width="3" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M20 20V33" stroke="#ffffff" stroke-width="3"
+                                        stroke-linecap="butt" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M28 20V33" stroke="#ffffff" stroke-width="3"
+                                        stroke-linecap="butt" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M4 10H44" stroke="#ffffff" stroke-width="3"
+                                        stroke-linecap="butt" stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M16 10L19.289 4H28.7771L32 10H16Z" fill="none"
+                                        stroke="#ffffff" stroke-width="3" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
 
-                        <div class="pl-3 text-light">
-                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path class="stroke-current" d="M9 10V44H39V10H9Z" fill="none" stroke="#ffffff"
-                                    stroke-width="3" stroke-linejoin="round" />
-                                <path class="stroke-current" d="M20 20V33" stroke="#ffffff" stroke-width="3"
-                                    stroke-linecap="butt" stroke-linejoin="round" />
-                                <path class="stroke-current" d="M28 20V33" stroke="#ffffff" stroke-width="3"
-                                    stroke-linecap="butt" stroke-linejoin="round" />
-                                <path class="stroke-current" d="M4 10H44" stroke="#ffffff" stroke-width="3"
-                                    stroke-linecap="butt" stroke-linejoin="round" />
-                                <path class="stroke-current" d="M16 10L19.289 4H28.7771L32 10H16Z" fill="none"
-                                    stroke="#ffffff" stroke-width="3" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
+                    <form action="edit/{% if post.ticket %}review{% else %}ticket{% endif %}/{{post.id}}" method="get"
+                        class="bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <button class="flex content-center border-0 focus:ring-0 w-full p-0 font-bold text-left"
+                            type="submit">
+                            Edit Post
 
-                    <div
-                        class="flex input content-center bg-layer cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-
-                        <form action="edit/{% if post.ticket %}review{% else %}ticket{% endif %}/{{post.id}}"
-                            method="get">
-                            <!-- {% csrf_token %} -->
-                            <!-- <input name="delete" value="false" class="hidden" /> -->
-                            <button class=" border-0 focus:ring-0 w-full p-0 font-bold text-left" type="submit">
-                                Edit Post
-                            </button>
-                        </form>
-
-                        <div class="pl-3 text-light">
-                            <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path class="stroke-current" d="M40 33V42C40 43.1046 39.1046 44 38 44H31.5"
-                                    stroke="#ffffff" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
-                                <path class="stroke-current"
-                                    d="M40 16V6C40 4.89543 39.1046 4 38 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H16"
-                                    stroke="#ffffff" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" />
-                                <path class="stroke-current" d="M16 16H30" stroke="#ffffff" stroke-width="3"
-                                    stroke-linecap="butt" />
-                                <path class="stroke-current" d="M23 44L40 23" stroke="#ffffff" stroke-width="3"
-                                    stroke-linecap="butt" />
-                                <path class="stroke-current" d="M16 24H24" stroke="#ffffff" stroke-width="3"
-                                    stroke-linecap="butt" />
-                            </svg>
-                        </div>
-                    </div>
+                            <div class="pl-3 text-light">
+                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path class="stroke-current" d="M40 33V42C40 43.1046 39.1046 44 38 44H31.5"
+                                        stroke="#ffffff" stroke-width="3" stroke-linecap="butt"
+                                        stroke-linejoin="round" />
+                                    <path class="stroke-current"
+                                        d="M40 16V6C40 4.89543 39.1046 4 38 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H16"
+                                        stroke="#ffffff" stroke-width="3" stroke-linecap="butt"
+                                        stroke-linejoin="round" />
+                                    <path class="stroke-current" d="M16 16H30" stroke="#ffffff" stroke-width="3"
+                                        stroke-linecap="butt" />
+                                    <path class="stroke-current" d="M23 44L40 23" stroke="#ffffff" stroke-width="3"
+                                        stroke-linecap="butt" />
+                                    <path class="stroke-current" d="M16 24H24" stroke="#ffffff" stroke-width="3"
+                                        stroke-linecap="butt" />
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-
                 {% include "_components/post.html" %}
             </section>
             {% endfor %}
