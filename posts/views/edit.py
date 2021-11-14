@@ -12,28 +12,34 @@ class EditPost(LoginRequired, TemplateView):
     template_name = "posts/form.html"
 
     def get(self, req: HttpRequest, post_type, post_id):
+        ctx = {}
+
         if post_type == "review" or post_type == "ticket":
             instance = Ticket if post_type == "ticket" else Review
             form = TicketForm if post_type == "ticket" else ReviewForm
 
             post = instance.objects.get(id=post_id)
-            
+            ctx["post"] = post
+            ctx["ticket"] = getattr(post, "ticket", None)
+
             if post:
                 form = form(instance=post)
-                return render(
-                    req,
-                    self.template_name,
-                    {post_type + "_form": form, "post": post, "ticket": getattr(post, "ticket", None)},
-                )
+
+            ctx[post_type + "_form"] = form
+            return render(req, self.template_name, ctx)
 
         return redirect("/posts/")
 
     def post(self, req: HttpRequest, post_type, post_id):
+        ctx = {}
+
         if post_type == "review" or post_type == "ticket":
             instance = Ticket if post_type == "ticket" else Review
             form = TicketForm if post_type == "ticket" else ReviewForm
 
             post = instance.objects.get(id=post_id)
+            ctx["post"] = post
+            ctx["ticket"] = getattr(post, "ticket", None)
 
             if post:
                 form = form(req.POST, req.FILES, instance=post)
@@ -43,10 +49,8 @@ class EditPost(LoginRequired, TemplateView):
                     return redirect("/posts/")
                 else:
                     form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
-                    return render(
-                        req,
-                        self.template_name,
-                        {"form": form, "post": post, "ticket": getattr(post, "ticket", None), "form_error": form_error},
-                    )
+                    ctx["form_errors"] = form_error
 
-        return redirect("/posts/")
+                ctx[post_type + "_form"] = form
+
+        return render(req, self.template_name, ctx)
