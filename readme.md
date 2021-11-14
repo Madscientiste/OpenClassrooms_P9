@@ -54,7 +54,7 @@ Quit the server with CTRL-BREAK.
 
 Then navigate to : http://127.0.0.1:8000/
 
-> NOTE : if this isn't what you are seeing, and you are unable to see the website, its probably because there is a typo somewhere or didn't follow the step correctly ...
+> NOTE : if this isn't what you are seeing, and you are unable to access the website, then its probably because there is a typo somewhere or didn't follow the steps correctly ...
 
 ## Available Accounts
 
