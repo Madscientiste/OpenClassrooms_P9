@@ -4,7 +4,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    avatar_url = models.URLField(default="https://i.pravatar.cc/256")
+    avatar = models.ImageField(upload_to="avatars/", default="avatars/default.png")
 
 
 class UserFollows(models.Model):

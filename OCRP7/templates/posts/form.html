@@ -117,6 +117,36 @@
 
                 <!-- Content -->
                 <div class="flex flex-col flex-100 space-y-6">
+                    {% for field in ticket_form %}
+                    {% if field.name == "title" %}
+                    <section class="space-y-2">
+                        <h3 class="text-lg font-bold">{{ field.label }}</h3>
+                        <div class="flex space-x-2 justify-center">
+                            <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
+                                <input name="{{ field.name }}" value="{% firstof field.initial '' %}"
+                                    class="bg-dark-200 border-0 focus:ring-0 w-full p-0" placeholder="World Trigger"
+                                    type="text">
+                            </div>
+                        </div>
+                    </section>
+                    {% elif field.name == "description" %}
+                    <section class="flex flex-100 flex-col space-y-2 min-h-[200px]">
+                        <h3 class="text-lg font-bold">Description</h3>
+                        <div class="flex flex-100 space-x-2 justify-center bg-dark-200 rounded p-3">
+                            <textarea name="{{ field.name }}" maxlength="2048"
+                                class="bg-dark-200 resize-none border-0 focus:ring-0 w-full p-0"
+                                placeholder="When a gate to another world suddenly opens on Earth..."
+                                type="text">{% firstof field.initial '' %}</textarea>
+                        </div>
+                    </section>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if review_form and ticket_form %}
+                    <hr class="border-b border-layer rounded">
+                    {% endif %}
+
+
                     {% for field in review_form %}
                     {% if field.name == "headline" %}
                     <section class="space-y-2">
@@ -157,39 +187,6 @@
                     </section>
                     {% endif %}
                     {% endfor %}
-
-                    {% if review_form and ticket_form %}
-                    <hr class="border-b border-layer rounded">
-                    {% endif %}
-
-                    {% for field in ticket_form %}
-                    {% if field.name == "title" %}
-                    <section class="space-y-2">
-                        <h3 class="text-lg font-bold">{{ field.label }}</h3>
-                        <div class="flex space-x-2 justify-center">
-                            <div class="flex input content-center bg-dark-200 rounded p-3 flex-1">
-                                <input name="{{ field.name }}" value="{% firstof field.initial '' %}"
-                                    class="bg-dark-200 border-0 focus:ring-0 w-full p-0" placeholder="World Trigger"
-                                    type="text">
-                            </div>
-                        </div>
-                    </section>
-                    {% elif field.name == "description" %}
-                    <section class="flex flex-100 flex-col space-y-2 min-h-[200px]">
-                        <h3 class="text-lg font-bold">Description</h3>
-                        <div class="flex flex-100 space-x-2 justify-center bg-dark-200 rounded p-3">
-                            <textarea name="{{ field.name }}" maxlength="2048"
-                                class="bg-dark-200 resize-none border-0 focus:ring-0 w-full p-0"
-                                placeholder="When a gate to another world suddenly opens on Earth..."
-                                type="text">{% firstof field.initial '' %}</textarea>
-                        </div>
-                    </section>
-
-                    {% endif %}
-                    {% endfor %}
-
-
-
 
                     {% if ticket_form or review_form %}
                     <section class="space-y-2 flex justify-end">

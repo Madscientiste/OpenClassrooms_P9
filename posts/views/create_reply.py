@@ -26,24 +26,29 @@ class CreateReply(LoginRequired, TemplateView):
         return render(req, self.template_name, ctx)
 
     def post(self, req: HttpRequest, post_id):
-        ticket_form = TicketForm(req.POST, req.FILES)
-        review_form = ReviewForm(req.POST)
         ctx = {}
 
         ticket = Ticket.objects.filter(id=post_id).first() if not post_id == "none" else None
         ctx["ticket"] = ticket
+
+        review_form = ReviewForm(req.POST)
         ctx["review_form"] = review_form
 
+        ctx["form_errors"] = []
+
         if not ticket:
+            ticket_form = TicketForm(req.POST, req.FILES)
             ctx["ticket_form"] = ticket_form
 
             tf_valid = ticket_form.is_valid()
             rf_valid = review_form.is_valid()
 
             if rf_valid and tf_valid:
-                ticket = Ticket.objects.create(**ticket_form.cleaned_data, user=req.user)
+                ticket = Ticket.objects.create(**ticket_form.cleaned_data, is_blocked=True, user=req.user)
                 Review.objects.create(**review_form.cleaned_data, ticket=ticket, user=req.user)
                 return redirect("/")
+
+            ctx["form_errors"] += [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
 
         else:
             rf_valid = review_form.is_valid()
@@ -55,8 +60,6 @@ class CreateReply(LoginRequired, TemplateView):
 
                 return redirect("/")
 
-        form_a = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in ticket_form.errors.items()]
-        form_b = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in review_form.errors.items()]
-        ctx["form_errors"] = form_a + form_b
+            ctx["form_errors"] += [f"{key.capitalize()} : {strip_tags(value)}" for key, value in review_form.errors.items()]
 
         return render(req, self.template_name, ctx)

@@ -17,20 +17,20 @@
             </a>
         </nav>
 
-        <div class="max-w-lg mt-24 ml-auto mr-auto">
+        <main class="max-w-lg mt-24 ml-auto mr-auto text-left">
             <section class="text-light text-center mt-12">
                 <h1 class="text-4xl font-bold">Create your account</h1>
             </section>
 
-            <section class="text-light text-center flex justify-between mt-12">
-                <form autocomplete="off" method="POST" action="/acc/register/"
-                    class="flex flex-grow flex-col flex-100 space-y-6">
-                    {% csrf_token %}
+            <form autocomplete="off" method="POST" action="/acc/register/" enctype="multipart/form-data"
+                class="text-light text-center flex justify-between mt-12">
+                {% csrf_token %}
 
+                <div class="flex flex-grow flex-col flex-100 space-y-6">
                     {% for field in form %}
-                    <div class="text-left">
-                        <div class="flex input content-center bg-dark-200 rounded p-3">
-                            {% if field.name == "username" %}
+                    <div class="space-y-1">
+                        {% if field.name == "username" %}
+                        <div class="flex content-center bg-dark-200 rounded p-3">
                             <input name="{{ field.name }}" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
                                 placeholder="{{ field.label }}" type="text">
 
@@ -44,19 +44,46 @@
                                         stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
-                            {% elif field.name == "avatar_url"%}
-                            <input name="{{ field.name }}" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
-                                placeholder="{{ field.label }}" type="url">
+                        </div>
 
-                            <div class="pl-3 text-dimm">
-                                <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path class="stroke-current"
-                                        d="M24.7071 9.56496L9.85789 24.4142C6.34317 27.9289 6.34317 33.6274 9.85789 37.1421V37.1421C13.3726 40.6568 19.0711 40.6568 22.5858 37.1421L40.2635 19.4645C42.6066 17.1213 42.6066 13.3223 40.2635 10.9792V10.9792C37.9203 8.63603 34.1213 8.63603 31.7782 10.9792L14.1005 28.6568C12.929 29.8284 12.929 31.7279 14.1005 32.8995V32.8995C15.2721 34.0711 17.1716 34.0711 18.3432 32.8995L33.1924 18.0502"
-                                        stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
+                        {% elif field.name == "avatar"%}
+                        <div class="flex items-center justify-between rounded">
+                            <div class="w-16 h-16">
+                                <img id="image" class="rounded w-16 h-16 object-cover"
+                                    src="https://www.gravatar.com/avatar?s=200&d=mm" alt="no img" />
                             </div>
-                            {% else %}
+
+                            <button onclick="select_img()" type="button"
+                                class="flex items-center bg-dark-200 rounded p-3">
+                                <p>Upload Avatar</p>
+                                <input id="avatar" type="file" name="{{ field.name }}" class="hidden">
+
+                                <div class="pl-3 text-dimm">
+                                    <svg width="24" height="24" viewBox="0 0 48 48" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path class="stroke-current"
+                                            d="M11.6777 20.271C7.27476 21.3181 4 25.2766 4 30C4 35.5228 8.47715 40 14 40C14.9474 40 15.864 39.8683 16.7325 39.6221"
+                                            stroke="#f36969" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path class="stroke-current"
+                                            d="M36.0547 20.271C40.4577 21.3181 43.7324 25.2766 43.7324 30C43.7324 35.5228 39.2553 40 33.7324 40V40C32.785 40 31.8684 39.8683 30.9999 39.6221"
+                                            stroke="#f36969" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path class="stroke-current"
+                                            d="M36 20C36 13.3726 30.6274 8 24 8C17.3726 8 12 13.3726 12 20"
+                                            stroke="#f36969" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path class="stroke-current" d="M17.0654 27.881L23.9999 20.9236L31.1318 28"
+                                            stroke="#f36969" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path class="stroke-current" d="M24 38V24.4618" stroke="#f36969"
+                                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+                        {% else %}
+                        <div class="flex content-center bg-dark-200 rounded p-3">
                             <input name="{{ field.name }}" class="bg-dark-200 border-0 focus:ring-0 w-full p-0"
                                 placeholder="{{ field.label }}" type="password">
 
@@ -72,10 +99,10 @@
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
-                            {% endif %}
                         </div>
+                        {% endif %}
 
-                        <div class="px-2 mt-2">
+                        <div class="px-2 text-left">
                             {% for error in field.errors %}
                             <div class="py-1">
                                 <p style="color: rgb(230, 73, 73)">{{ error }}</p>
@@ -87,12 +114,11 @@
                             {% endif %}
                         </div>
                     </div>
-
                     {% endfor %}
 
                     <div
-                        class="flex input content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
-                        <button class="bg-primary border-0 focus:ring-0 w-full p-0 font-bold text-left"
+                        class="flex content-center bg-primary cursor-pointer rounded p-3 hover:opacity-95 active:opacity-90">
+                        <button class="bg-primary border-0 focus:ring-0 w-full p-0 text-left font-bold"
                             type="submit">Sign Up</button>
 
                         <div class="pl-3 text-light">
@@ -106,12 +132,26 @@
                             </svg>
                         </div>
                     </div>
-                </form>
-            </section>
-        </div>
+            </form>
+        </main>
     </div>
 
     {% include "_components/footer.html" %}
+
+
+    <script>
+        function select_img() {
+            let input = document.getElementById("avatar");
+            input.addEventListener('change', function (e) {
+                let file = e.target.files[0];
+
+                let image = document.getElementById('image');
+                image.src = URL.createObjectURL(file);
+            });
+
+            input.click();
+        }
+    </script>
 </body>
 
 </html>

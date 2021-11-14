@@ -17,7 +17,7 @@ class EditPost(LoginRequired, TemplateView):
             form = TicketForm if post_type == "ticket" else ReviewForm
 
             post = instance.objects.get(id=post_id)
-
+            
             if post:
                 form = form(instance=post)
                 return render(

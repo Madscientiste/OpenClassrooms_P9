@@ -7,8 +7,6 @@ avatar_example = "eg: https://cdn.myanimelist.net/images/userimages/5696390.jpg"
 
 
 class SignUpForm(UserCreationForm):
-    avatar_url = URLField(label="Avatar URL", help_text=avatar_example, required=False)
-
     class Meta:
         model = User
-        fields = ("username", "password1", "password2", "avatar_url")
+        fields = ("username", "password1", "password2", "avatar")

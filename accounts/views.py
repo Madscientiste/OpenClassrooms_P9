@@ -59,7 +59,7 @@ class FollowsPage(LoginRequired, TemplateView):
             error = "You are already following this user"
         except User.DoesNotExist:
             error = "User does not exist"
- 
+
         return render(req, self.template_name, {"error": error, "following": following, "followers": followers})
 
 
@@ -71,12 +71,9 @@ class RegisterPage(TemplateView):
         return render(req, self.template_name, {"form": register_form})
 
     def post(self, req: HttpRequest):
-        register_form = SignUpForm(req.POST)
+        register_form = SignUpForm(req.POST, req.FILES)
 
         if register_form.is_valid():
-            if not register_form.cleaned_data["avatar_url"]:
-                del register_form.cleaned_data["avatar_url"]
-
             user = register_form.save()
             raw_password = register_form.cleaned_data.get("password1")
             user = authenticate(username=user.username, password=raw_password)
