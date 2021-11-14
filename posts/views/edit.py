@@ -51,6 +51,6 @@ class EditPost(LoginRequired, TemplateView):
                     form_error = [f"{key.capitalize()} : {strip_tags(value)}" for key, value in form.errors.items()]
                     ctx["form_errors"] = form_error
 
-                ctx[post_type + "_form"] = form
+            ctx[post_type + "_form"] = form
 
         return render(req, self.template_name, ctx)
