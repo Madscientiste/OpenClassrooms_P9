@@ -1,11 +1,9 @@
 from django.http.request import HttpRequest
-from django.shortcuts import redirect, render
-from django.utils.html import strip_tags
+from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 
 from accounts.views import LoginRequired
 from posts.models import Review, Ticket
-from posts.forms import ReviewForm, TicketForm
 
 
 class DeletePost(LoginRequired, TemplateView):
