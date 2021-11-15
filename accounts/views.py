@@ -93,19 +93,16 @@ class LoginPage(TemplateView):
         return render(req, self.template_name)
 
     def post(self, req: HttpRequest):
-        username = req.POST["username"]
-        password = req.POST["password"]
+        username = req.POST.get("username", None)
+        password = req.POST.get("password", None)
 
         user = authenticate(req, username=username, password=password)
 
-        if user:
-            print("attempting to login the user")
+        if user is not None:
             login(req, user)
-
             return redirect("/posts/flux/")
-        else:
-            return render(req, self.template_name, {"error": "wrong password or username"})
 
+        return render(req, self.template_name, {"error": "Invalid username or password"})
 
 class LogoutUser(TemplateView):
     def get(self, req: HttpRequest):
