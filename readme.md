@@ -20,7 +20,7 @@ Then activate it
 
 ```
 [WINDOWS]
-python ./.venv/Scripts/activate
+./.venv/Scripts/activate
 
 [LINUX]
 source .venv/bin/activate
